@@ -1,0 +1,57 @@
+
+<!-- http://iot-projects.com/index.php?id=websocket-a-simple-example -->
+
+<!doctype html>
+<html>
+	<head>
+		<title>Websockets</title>
+		<script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+	</head>
+	<body>
+		
+		<h1>Websockets</h1>
+		<label id="conn_text"></label><br />
+		<input type="text" id="input_text"/>
+		<input type="submit" id="button" value="Send" />
+		<div id="messages_txt" />
+
+		<script>
+			$(document).ready(function () {
+
+				// var ws = new WebSocket("ws://localhost:8888/ws");
+				// var ws = new WebSocket("ws://192.168.0.42:8888/ws");
+				var ws = new WebSocket("ws://raspberrypi.local:8888/ws");
+
+				ws.onopen = function(evt) {
+					console.log("ON SOCKET OPEN");
+					var conn_status = document.getElementById('conn_text');
+					conn_status.innerHTML = "Connection status: Connected!"
+				};
+
+				ws.onmessage = function(evt) {
+					console.log("SOCKET ON MESSAGE");
+					var newMessage = document.createElement('p');
+					newMessage.textContent = "Server: " + evt.data;
+					document.getElementById('messages_txt').appendChild(newMessage);
+				};
+
+				ws.onclose = function(evt) {
+					console.log("SOCKET ON CLOSE");
+					// alert ("Connection closed");
+				};
+
+
+				$("#button").click(function(evt) {
+					evt.preventDefault();
+					var message = $("#input_text").val();
+					ws.send(message);
+					var newMessage = document.createElement('p');
+					newMessage.textContent = "Client: " + message;
+					document.getElementById('messages_txt').appendChild(newMessage);
+				});
+				
+
+			});
+		</script>
+	</body>
+</html>

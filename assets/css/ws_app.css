@@ -1,0 +1,359 @@
+
+body, html {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+
+body { 
+	color: #999;
+	font-weight: 300;
+	font-family: 'Roboto', Helvetica, Arial, sans-serif;
+	padding-top: 70px; 
+	background-color: #222222;
+	background: repeating-linear-gradient(45deg, #2b2b2b 0%, #2b2b2b 10%, #222222 0%, #222222 50%) 0 / 15px 15px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-weight: 200;
+}
+
+
+.navbar {
+	text-transform: uppercase;
+}
+
+.col-centered {
+	margin: 0 auto;
+    float: none;
+}
+
+.navbar-inverse .navbar-brand {
+	color: #777;
+}
+
+.navbar-inverse .navbar-brand:hover {
+	color: #777;	
+}
+
+.navbar-right {
+	padding-top: 5px;
+}
+
+
+.conn_text,
+.power_btn,
+.update_btn {
+	display: inline-block;
+}
+
+
+.conn_text {
+	font-weight: bold;
+	font-size: 10px;
+	color: #777;
+	// padding-top: 20px;
+	margin-right: 20px;
+}
+
+.conn_text .warning {
+	color: red;
+}
+
+.conn_text .connected {
+	color: lime;
+}
+
+
+.tab-pane h3 {
+	margin-bottom: 30px;
+}
+
+
+#turntable .content {
+	max-width: 450px;
+}
+
+button:focus, button:active:focus, button.active:focus,
+.btn:focus, .btn:active:focus, .btn.active:focus {
+	outline: 0;
+}
+
+
+
+.power_btn, .update_btn {
+	font-size: 20px;
+	background-color: #333;
+    border: 0;
+    border-radius: 100%;
+    width: 40px;
+    line-height: 15px;
+    height: 40px;
+}
+
+
+
+// SWITCHES CONTENT
+
+#switches {
+	// text-align: center;
+}
+
+#switches h2 {
+	// text-align: left;
+	// width: 120px;
+	// display: inline-block;
+	// font-size: 14px;
+	// font-weight: 500;
+	// text-transform: uppercase;
+}
+
+
+#switches .button_container {
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	display: table;
+	table-layout: fixed;
+	// text-align: center;
+	// padding: 0 0px;
+}
+
+#switches .button_group {
+	display: table-cell;
+	height: 100%;
+	width: 25%;
+	border-left: 4px solid transparent;
+}
+
+#switches .button_group:first-child {
+	border-left: 0;
+}
+
+#switches .button_column {
+	float: left;
+	width: 50%;
+}
+
+#switches .button_group h2 {
+	width: 100%;
+	text-align: center;
+	display: inline-block;
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #777;
+	background-color: rgba( 0,0,0,0.75 );
+	padding: 5px 0;
+	margin: 0;
+}
+
+#switches button {
+	display: inline;
+	margin: 5px;
+	text-transform: uppercase;
+	font-size: 10px;
+	font-weight: 400;
+	line-height: 14px;
+	padding: 12px;
+	background-color: rgba( 0,0,0,0.25 );
+	border: 0px;
+	border-radius: 0;
+	margin:0.5%;
+	width: 99%;
+	float: left;
+	position: relative;
+	color: #AAA;
+}
+
+#switches .light {
+	position: absolute;
+	right: 15px;
+	top: 50%;
+	display: inline-block;
+	width: 6px;
+	height: 6px;
+	margin-top: -3px;
+	border-radius: 20px;
+	background-color: red;
+	box-shadow: 0 0 20px red,0 0 10px red,0 0 5px red;
+}
+
+#switches .light:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 6px;
+	height: 6px;
+	border-radius: 20px;
+	background-color: white;
+	opacity: 0.4;
+
+	background: rgba(255,255,255,0);
+	background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(0,0,0,0.5) 100%);
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255,255,255,1)), color-stop(100%, rgba(0,0,0,0.5)));
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(0,0,0,0.5) 100%);
+	background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(0,0,0,0.5) 100%);
+	background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(0,0,0,0.5) 100%);
+	background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%, rgba(0,0,0,0.5) 100%);
+	// filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000', GradientType=1 );
+} 
+
+#switches button.active .light {
+	background-color: lime;
+	    box-shadow: 0 0 20px lime,0 0 10px lime,0 0 5px lime;
+}
+
+
+
+// LAYOUT CSS FOR SVG
+
+#switches .layout,
+#switches svg {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+#switches .track { 
+	display: inline; 
+	fill: none;
+	opacity: 0.5;
+	stroke: #777;
+	stroke-width: 4;
+	stroke-miterlimit: 10;
+	// stroke-linecap: round;
+}
+#switches .point .track { 
+	fill: none;
+	stroke: #00FF00;
+	stroke-width: 4;
+	// stroke-linecap: none;
+	stroke-miterlimit: 10;
+}
+
+#switches .point .closed.track,
+#switches .point .closed .track {
+	opacity: 1;
+	stroke: #00FF00;
+}
+
+#switches .point .open.track,
+#switches .point .open .track {
+	opacity: 0.5;
+	stroke: #FF0000;
+}
+
+#switches .point.active .open.track,
+#switches .point.active .open .track {
+	opacity: 1;
+	stroke: #00FF00;
+}
+
+#switches .point.active .closed.track,
+#switches .point.active .closed .track {
+	opacity: 0.5;
+	stroke: #FF0000;
+}
+
+#switches .building { 
+	fill: #000;
+}
+
+#switches .labels {
+	fill: #CCCCCC;	
+}
+
+
+
+#turntable .connecting_track_container {
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    // right: 0;
+    // bottom: 0;
+    // margin: auto;
+    // width: 1024px;
+    // height: 768px;
+}
+
+
+#turntable .connecting_track {
+	// fill: #777777;
+	position: absolute;
+	top:0;
+	left: 0;
+	// width: 40px;
+	// height: 78px;
+	// background: url( ../images/connecting_track.svg ) top left no-repeat;
+	// width: 5px;
+	// height: 5px;
+	// border-radius: 20px;
+	// background: red;
+	z-index: 100;
+	// transform: translate( -20px, -74px );
+	// margin-left: -20px;
+	// margin-top: -78px;
+}
+
+#turntable .outer_track {	
+    width: 1024px;
+    height: 700px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+
+#turntable .connecting_track .track {
+	margin-left: -20px;
+	fill: #777;
+	cursor: pointer;
+}
+
+#turntable .connecting_track.active .track {
+	fill: #DDD !important;
+}
+
+#turntable .track {
+	fill: #DDD;
+}
+
+#turntable .track_bed {
+	fill: #222;
+	stroke: #DDD;
+	stroke-width: 2;
+}
+
+#turntable .base_bg {
+	fill: #000;
+}
+
+#turntable .base_outter_line {
+	stroke: #777;
+	stroke-width: 2;
+}
+
+#turntable .base_inner_line {
+	stroke: #DDD;
+	stroke-width: 2;
+}
+
+#turntable .base_inner_circle {
+	fill: #777;
+}
+
+.st0{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
+.st1{fill:none;stroke:#000000;stroke-miterlimit:10;}
+.st2{fill:#FFFFFF;}
+
+

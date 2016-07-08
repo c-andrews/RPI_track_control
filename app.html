@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Remote stepper motor control</title>
+		<meta charset="utf-8" />
+		
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+
+		<!-- STYLES -->
+		<link rel="stylesheet" href="assets/vendor/bootstrap.css">
+		<link rel="stylesheet" href="assets/css/ws_app.css">
+		<link rel="stylesheet" href="assets/css/ws_app_fonts.css">
+
+
+		<!-- JS -->
+		<script src="assets/vendor/jquery.js"></script>
+		<!-- <script src="assets/vendor/d3.js"></script> -->
+		<script src="assets/vendor/bootstrap.js"></script>
+		<script src="assets/vendor/greensock/TweenLite.min.js"></script>
+		<script src="assets/vendor/greensock/TweenMax.min.js"></script>
+		<script src="assets/vendor/greensock/jquery.gsap.min.js"></script>
+		<script src="assets/vendor/greensock/CSSPlugin.min.js"></script>
+		<script src="assets/vendor/greensock/EasePack.min.js"></script>
+		
+		
+
+		<script src="assets/js/WebSocket.js"></script>
+		<script src="assets/js/TurntableController.js"></script>
+		<script src="assets/js/SwitchController.js"></script>
+		<script src="assets/js/ws_app.js"></script>
+
+	</head>
+
+
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class=row>
+
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<div class="navbar-brand">RPI Control</div>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav" role="tablist">
+							<li role="presentation" class="active"><a href="#switches" aria-controls="switches" role="tab" data-toggle="tab">Points</a></li>
+							<li role="presentation"><a href="#turntable" aria-controls="turntable" role="tab" data-toggle="tab">Turntable</a></li>
+						</ul>
+
+						<div class="navbar-right">
+							<div class="conn_text">
+								WS: <span id="conn_text">Connecting!</span>
+							</div>
+
+							<button id="update_btn" class="update_btn"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></button>
+							<button id="power_btn" class="power_btn"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></button>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			
+			<div class="row">
+
+				<!-- Tab panes -->
+				<div class="tab-content">
+					
+					<div role="tabpanel" class="tab-pane active" id="switches">
+						<div class="content">
+
+							<svg class="layout" xmlns="http://www.w3.org/2000/svg" width="1024px" height="490px" viewBox="0 0 1024 490" style="position:absolute;left:0;right:0;top:70px;margin:auto">
+								<g id="track">
+									<rect x="411" y="323" class="building" width="46" height="63"/>
+									<rect x="641.6" y="267.8" transform="matrix(-0.5631 0.8264 -0.8264 -0.5631 1269.2885 -111.9019)" class="building" width="45.2" height="23.7"/>
+									<path class="track" d="M27,227c0-93.7,75.3-170,169-170h409"/>
+									<path class="track" d="M47,227c0-82.8,66.2-150,149-150h409"/>
+									<path class="track" d="M66,227c0-72,58-130,130-130l409-1"/>
+									<path class="track" d="M196.6,462.9C103,462.9,27,386.7,27,293"/>
+									<path class="track" d="M196.6,443.3C113.8,443.3,47,375.8,47,293"/>
+									<path class="track" d="M196.6,423.7C124.7,423.7,66,365,66,293"/>
+									<path class="track" d="M989.2,204.4C989.2,110.7,913.7,35,820,35"/>
+									<path class="track" d="M969.6,204.4C969.6,121.6,902.8,55,820,55"/>
+									<path class="track" d="M820,74c72,0,129.9,58.1,129.9,130.1"/>
+									<path class="track" d="M989.2,204.1c0,93.7-75.6,169.9-169.2,169.9"/>
+									<path class="track" d="M969.6,204.1c0,82.8-66.8,149.9-149.6,149.9"/>
+									<path class="track" d="M949.9,204.1c0,72-58,129.9-129.9,129.9"/>
+									<path class="track" d="M196.6,423.7c36,0,68.6-14.6,92.2-38.2"/>
+									<path class="track" d="M196.6,443.3c41.4,0,78.9-16.8,106.1-44"/>
+									<path class="track" d="M196.6,462.9c46.9,0,89.3-19,120-49.7"/>
+									<path class="track" d="M410,374c-36.4,0-69.7,15.2-93.3,39.3"/>
+									<path class="track" d="M410,354c-41.8,0-80,17.8-107.2,45.4"/>
+									<path class="track" d="M544,232c41.8,0,80.1-16.7,107.3-44.3"/>
+									<path class="track" d="M410,334c-47.3,0-90.3,20.3-121.1,51.5"/>
+									<path class="track" d="M605,57c17.5,0,34-3.3,49.2-9.6"/>
+									<path class="track" d="M605,77c20.1,0,39.2-4.2,56.7-11.4"/>
+									<path class="track" d="M605,96c22.8,0,44.4-4.1,64.2-12.3"/>
+									<path class="track" d="M718,74c-17.2,0-33.7,3.7-48.8,9.8"/>
+									<path class="track" d="M718,55c-19.9,0-38.9,3.6-56.3,10.6"/>
+									<path class="track" d="M718,35c-22.5,0-44.1,4.5-63.8,12.5"/>
+									<line class="track" x1="718" y1="35" x2="820" y2="35"/>
+									<line class="track" x1="718" y1="55" x2="820" y2="55"/>
+									<line class="track" x1="450" y1="205" x2="553" y2="205"/>
+									<line class="track" x1="450" y1="186" x2="600" y2="186"/>
+									<line class="track" x1="173" y1="195" x2="320" y2="195"/>
+									<line class="track" x1="173" y1="213" x2="365" y2="213"/>
+									<line class="track" x1="233" y1="136" x2="529" y2="136"/>
+									<line class="track" x1="47" y1="227" x2="47" y2="293"/>
+									<line class="track" x1="27" y1="227" x2="27" y2="293"/>
+									<path class="track" d="M168.7,148.8c-43.3,17.9-75.6,51.5-92.2,91.6"/>
+									<path class="track" d="M233,136c-22.8,0-44.5,4.6-64.3,12.8"/>
+									<path class="track" d="M369.8,204.7c-16.1-6.7-33.3-9.6-49.8-9.7"/>
+									<path class="track" d="M553,205c19.1,0,34.8-3.8,50-10"/>
+									<path class="track" d="M689,204c0-72,59-130,131-130"/>
+									<path class="track" d="M689,204c0,72-58,130-130,130"/>
+									<line class="track" x1="718" y1="74" x2="820" y2="74"/>
+									<line class="track" x1="173" y1="232" x2="544" y2="232"/>
+									<line class="track" x1="410" y1="334" x2="820" y2="334"/>
+									<line class="track" x1="410" y1="354" x2="820" y2="354"/>
+									<line class="track" x1="410" y1="374" x2="820" y2="374"/>
+									<line class="track" x1="369.8" y1="204.7" x2="411.5" y2="221.9"/>
+									<line class="track" x1="651.3" y1="187.7" x2="691" y2="148"/>
+									<path class="track" d="M649,176c16.1-6.7,30.3-16.4,42-28"/>
+									<line class="track" x1="691" y1="148" x2="729.3" y2="110.6"/>
+									<line class="track" x1="603" y1="195" x2="649" y2="176"/>
+									<path class="track" d="M600,186c19.1,0,33.8-3.8,49-10"/>
+									<line class="track" x1="66" y1="227" x2="66" y2="293"/>
+									<path class="track" d="M76.5,240.4C69.8,256.5,66.1,273.5,66,290"/>
+									<path class="track" d="M411.5,221.9c16.1,6.7,33,10,49.5,10.1"/>
+									<path class="track" d="M414.4,223.1c-16.1-6.7-32.9-10-49.4-10.1"/>
+									<line class="track" x1="661.8" y1="364.2" x2="711.3" y2="343.7"/>
+									<path class="track" d="M613,354c19.1,0,32.6-3.6,47.8-9.8"/>
+									<path class="track" d="M613,374c19.1,0,33.6-3.6,48.8-9.8"/>
+									<path class="track" d="M663,374c19.1,0,35-4,50.2-10.2"/>
+									<path class="track" d="M507.2,364.1c17.6,7.3,34.4,9.8,50.8,9.9"/>
+									<path class="track" d="M558.4,344.2c17.6,7.3,31.1,9.8,47.6,9.9"/>
+									<path class="track" d="M763,354c-19.1,0-34.6,3.6-49.8,9.8"/>
+									<path class="track" d="M763,334c-19.1,0-36.6,3.4-51.8,9.7"/>
+									<path class="track" d="M711,334c-19.1,0-35,4-50.2,10.2"/>
+									<path class="track" d="M461,334c16.5,0.1,30.3,2.8,47.9,10.1l47.7,19.7c17.6,7.3,32.9,10.1,49.4,10.2"/>
+									<path class="track" d="M507.2,364.1c-17.6-7.3-29.7-10-46.2-10.1"/>
+									<path class="track" d="M558.3,344.1c-17.6-7.3-32.8-10-49.3-10.1"/>
+								</g>
+								<g id="points">
+
+									<!-- POINT 0 -->
+									<g id="point-0" class="point-0 point">
+										<path id="point-0-open" class="open track" d="M71.4,329.7c-3.3-11.5-5.1-23.7-5.1-36.3c0-17.5,3.6-36.8,9.8-52.1
+											c5.3-12.9,12.3-25.1,20.7-36.5"/>
+										<path id="point-0-closed" class="closed track" d="M71.4,329.7c-3.4-11.6-5.1-21.6-5.1-34.3l0-68.4c0-9.4,1.1-19,3-27.9"/>
+									</g>
+
+									<!-- POINT 1 -->
+									<g id="point-1" class="point-1 point">
+										<path id="point-1-open" class="open track" d="M442,354l17,0.1c19.1,0,32.4,3.7,47.6,9.9s30.9,10,49.9,10h1.4"/>
+										<g id="point-1-closed" class="closed">
+											<line class="track" x1="558" y1="374" x2="479" y2="374"/>
+											<line class="track" x1="442" y1="354" x2="511" y2="354"/>
+										</g>
+									</g>
+
+									<!-- POINT 2 -->
+									<g id="point-2" class="point-2 point">
+										<path id="point-2-open" class="open track" d="M611,374c-19.1,0-37.8-3.6-53-9.8l-49.5-20.5c-15.2-6.2-30.4-9.7-49.4-9.7h-17"/>
+										<g id="point-2-closed" class="closed">
+											<line class="track" x1="611" y1="374" x2="558" y2="374"/>
+											<line class="track" x1="442" y1="334" x2="507" y2="334"/>
+										</g>
+									</g>
+
+									<!-- POINT 3 -->
+									<g id="point-3" class="point-3 point">
+										<path id="point-3-open" class="open track" d="M507,334h3.2c19.1,0,34.2,3.9,49.4,10.1s32.3,9.9,51.4,9.9"/>
+										<g id="point-3-closed" class="closed">
+											<line class="track" x1="611" y1="354" x2="555" y2="354"/>
+											<line class="track" x1="507" y1="334" x2="558" y2="334"/>
+										</g>
+									</g>
+
+									<!-- POINT 4 -->
+									<g id="point-4" class="point-4 point">
+										<path id="point-4-open" class="open track" d="M713,334h-3c-19.1,0-34.6,3.9-49.8,10.1S630.1,354,611,354"/>
+										<g id="point-4-closed" class="closed">
+											<line class="track" x1="611" y1="354" x2="664" y2="354"/>
+											<line class="track" x1="713" y1="334" x2="655" y2="334"/>
+										</g>
+									</g>
+
+									<!-- POINT 5 -->
+									<g id="point-5" class="point-5 point">
+										<path id="point-5-open" class="open track" d="M611,374c19.1,0,35.6-3.6,50.8-9.8l49.5-20.5c15.2-6.2,29.6-9.7,48.7-9.7h17"/>
+										<g id="point-5-closed" class="closed">
+											<line class="track" x1="611" y1="374" x2="660" y2="374"/>
+											<line class="track" x1="777" y1="334" x2="713" y2="334"/>
+										</g>
+									</g>
+
+									<!-- POINT 6 -->
+									<g id="point-6" class="point-6 point">
+										<path id="point-6-open" class="open track" d="M777,354l-13.9,0.1c-19.1,0-34.7,3.7-49.9,9.9s-30.9,10-50,10H660"/>
+										<g id="point-6-closed" class="closed">
+											<line class="track" x1="660" y1="374" x2="741" y2="374"/>
+											<line class="track" x1="777" y1="354" x2="708" y2="354"/>
+										</g>
+									</g>
+
+									<!-- POINT 7 -->
+									<g id="point-7" class="point-7 point">
+										<g id="point-7-open" class="open">
+											<path class="track" d="M747.4,95.9c37.6-25.2,85.4-28.3,125.9-10.1"/>
+											<path class="track" d="M680.1,251.4C661.3,299.8,614.2,334,559,334h-1"/>
+										</g>
+										<g id="point-7-closed" class="closed">
+											<path class="track" d="M748,74h71.6c18.5,0,36.6,3.5,53.8,11.4"/>
+											<line class="track" x1="558" y1="334" x2="637" y2="334"/>
+										</g>
+									</g>
+
+									<!-- POINT 8 -->
+									<g id="point-8" class="point-8 point">
+										<path id="point-8-open" class="open track" d="M694.4,145.3l36.5-36.5c3.2-3.2,12.7-10.4,16.5-13"/>
+										<path id="point-8-closed" class="closed track" d="M680.1,251.4c5.7-14.7,8.9-30.7,8.9-47.4c0-45,23.5-84.8,58.4-108.1"/>
+									</g>
+
+									<!-- POINT 9 -->
+									<g id="point-9" class="point-9 point">
+										<path id="point-9-open" class="open track" d="M648.8,176.1c15.2-6.4,29.1-14.4,42.6-27.9l3-2.9"/>
+										<path id="point-9-closed" class="closed track" d="M544,232c41.8,0,80.1-16.7,107.3-44.3l43.1-42.4"/>
+									</g>
+
+									<!-- POINT 10 -->
+									<g id="point-10" class="point-10 point">
+										<path id="point-10-open" class="open track" d="M649,176.1l-3.4,1.4c-17.6,7.3-33.1,8.5-49.5,8.5H452"/>
+										<path id="point-10-closed" class="closed track" d="M452,205h102.1c0,0,24.8-0.1,49.5-10.2l45.2-18.7"/>
+									</g>
+
+									<!-- POINT 11 -->
+									<g id="point-11" class="point-11 point">
+										<path id="point-11-open" class="open track" d="M413.8,223c16.1,6.7,30.8,8.9,47.2,9h83"/>
+										<line id="point-11-closed" class="closed track" x1="544" y1="232" x2="175" y2="232"/>
+									</g>
+
+									<!-- POINT 12 -->
+									<g id="point-12" class="point-12 point">
+										<path id="point-12-open" class="open track" d="M414,223c-16.1-6.7-32.5-10-48.9-10H175"/>
+										<path id="point-12-closed" class="closed track" d="M414,223l-43.3-18.3c0,0-22.9-9.7-49.6-9.7H175"/>
+									</g>
+								
+								</g>
+							</svg>
+							
+							<div class="button_container">
+								<div class="button_group">
+									<h2>Main Line:</h2>
+									<div class="button_column">
+										<button class="switch_button" data-id="0" data-on="0" data-off="1" data-toggle="button" type="button">Switch 1 <span class="light"></span></button>
+										<button class="switch_button" data-id="1" data-on="2" data-off="3" data-toggle="button" type="button">Switch 2 <span class="light"></span></button>
+										<button class="switch_button" data-id="2" data-on="4" data-off="5" data-toggle="button" type="button">Switch 3 <span class="light"></span></button>
+										<button class="switch_button" data-id="3" data-on="6" data-off="7" data-toggle="button" type="button">Switch 4 <span class="light"></span></button>
+									</div>
+									<div class="button_column">
+										<button class="switch_button" data-id="4" data-on="8" data-off="9" data-toggle="button" type="button">Switch 5 <span class="light"></span></button>
+										<button class="switch_button" data-id="5" data-on="10" data-off="11" data-toggle="button" type="button">Switch 6 <span class="light"></span></button>
+										<button class="switch_button" data-id="6" data-on="12" data-off="13" data-toggle="button" type="button">Switch 7 <span class="light"></span></button>
+										<button class="switch_button" data-id="7" data-on="14" data-off="15" data-toggle="button" type="button">Switch 8 <span class="light"></span></button>
+									</div>
+								</div>
+								<!-- <div class="button_group">
+									<h2>Reverse Loop:</h2>
+									
+								</div> -->
+								<div class="button_group">
+									<h2>Yard:</h2>
+									<div class="button_column">
+										<button class="switch_button" data-id="8" data-on="16" data-off="17" data-toggle="button" type="button">Switch 9 <span class="light"></span></button>
+										<button class="switch_button" data-id="9" data-on="18" data-off="19" data-toggle="button" type="button">Switch 10 <span class="light"></span></button>
+										<button class="switch_button" data-id="10" data-on="20" data-off="21" data-toggle="button" type="button">Switch 11 <span class="light"></span></button>
+									</div>
+									<div class="button_column">
+										<button class="switch_button" data-id="11" data-on="22" data-off="23" data-toggle="button" type="button">Switch 12 <span class="light"></span></button>
+										<button class="switch_button" data-id="12" data-on="24" data-off="25" data-toggle="button" type="button">Switch 13 <span class="light"></span></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div role="tabpanel" class="tab-pane" id="turntable">
+						<!-- <div id="wrapper" class="col-centered content"></div> -->
+
+
+						<svg xmlns="http://www.w3.org/2000/svg" width="1024px" height="700px" viewBox="0 0 1024 700" style="position:absolute;left:0;right:0;top:0;bottom:0;margin:auto">
+							<g id="base">
+								<circle class="base_bg" cx="512" cy="350" r="250" />
+								<circle class="base_outter_line" cx="512" cy="350" r="224" />
+								<circle class="base_outter_line" cx="512" cy="350" r="232" />
+								<circle class="base_inner_line" cx="512" cy="350" r="74" />
+								<circle class="base_inner_circle" cx="512" cy="350" r="44" />
+							</g>
+
+							<g id="turning_track">
+								
+								<path class="track_bed" d="M512,587.3c-11,0-22-0.8-33-2.2V115.5c11-1.5,22-2.2,33-2.2s22,0.8,33,2.2v469.5C534,586.5,523,587.3,512,587.3z"/>
+								
+								<g class="track">
+									<rect x="492" y="578" width="40" height="4"/>
+									<rect x="492" y="448" width="40" height="4"/>
+									<rect x="492" y="438" width="40" height="4"/>
+									<rect x="492" y="458" width="40" height="4"/>
+									<rect x="492" y="468" width="40" height="4"/>
+									<rect x="492" y="478" width="40" height="4"/>
+									<rect x="492" y="488" width="40" height="4"/>
+									<rect x="492" y="498" width="40" height="4"/>
+									<rect x="492" y="508" width="40" height="4"/>
+									<rect x="492" y="518" width="40" height="4"/>
+									<rect x="492" y="528" width="40" height="4"/>
+									<rect x="492" y="538" width="40" height="4"/>
+									<rect x="492" y="548" width="40" height="4"/>
+									<rect x="492" y="558" width="40" height="4"/>
+									<rect x="492" y="568" width="40" height="4"/>
+									<rect x="492" y="428" width="40" height="4"/>
+									<rect x="492" y="418" width="40" height="4"/>
+									<rect x="492" y="408" width="40" height="4"/>
+									<rect x="492" y="398" width="40" height="4"/>
+									<rect x="492" y="388" width="40" height="4"/>
+									<rect x="492" y="378" width="40" height="4"/>
+									<rect x="492" y="368" width="40" height="4"/>
+									<rect x="492" y="358" width="40" height="4"/>
+									<rect x="492" y="348" width="40" height="4"/>
+									<rect x="492" y="338" width="40" height="4"/>
+									<rect x="492" y="328" width="40" height="4"/>
+									<rect x="492" y="318" width="40" height="4"/>
+									<rect x="492" y="308" width="40" height="4"/>
+									<rect x="492" y="298" width="40" height="4"/>
+									<rect x="492" y="288" width="40" height="4"/>
+									<rect x="492" y="278" width="40" height="4"/>
+									<rect x="492" y="268" width="40" height="4"/>
+									<rect x="492" y="258" width="40" height="4"/>
+									<rect x="492" y="248" width="40" height="4"/>
+									<rect x="492" y="238" width="40" height="4"/>
+									<rect x="492" y="228" width="40" height="4"/>
+									<rect x="492" y="218" width="40" height="4"/>
+									<rect x="492" y="208" width="40" height="4"/>
+									<rect x="492" y="198" width="40" height="4"/>
+									<rect x="492" y="188" width="40" height="4"/>
+									<rect x="492" y="178" width="40" height="4"/>
+									<rect x="492" y="168" width="40" height="4"/>
+									<rect x="492" y="158" width="40" height="4"/>
+									<rect x="492" y="148" width="40" height="4"/>
+									<rect x="492" y="138" width="40" height="4"/>
+									<rect x="492" y="128" width="40" height="4"/>
+									<rect x="492" y="118" width="40" height="4"/>
+									<rect x="498" y="109.5" width="2" height="481"/>
+									<rect x="524" y="109.5" width="2" height="481"/>
+								</g>
+							</g>
+						</svg>
+
+
+						<div class="outer_track">
+							<div id="connecting_track_container" class="connecting_track_container"></div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		
+	</body>
+</html>
