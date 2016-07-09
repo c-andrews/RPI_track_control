@@ -196,7 +196,7 @@ class relaySwitch:
 				time.sleep( self.sleepTime );
 
 				# Increase I so that we miss the open relay
-				i++
+				i+=1
 
 			# if i is not 0 then reset it to 0
 			else
