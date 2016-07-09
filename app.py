@@ -101,6 +101,7 @@ class stepMotor:
 		s = 1
 
 		print 'DESIRED ANGLE: %s\n' %str( desiredAngle )
+		print 'CURRENT POS: %s\n' %str( self.motorPosDeg )
 
 		if desiredAngle == self.motorPosDeg:
 			return
