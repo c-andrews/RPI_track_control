@@ -181,6 +181,10 @@ class relaySwitch:
 		# Set the sleep time
 		self.sleepTime = 0.1
 
+		self.mcp1 = None
+		self.mcp2 = None
+		self.mcp3 = None
+
 		# Setup the three MCP23017 chips
 		self.mcp1 = Adafruit_MCP230XX( address=0x20, num_gpios=16 )
 		# self.mcp2 = Adafruit_MCP230XX( address=0x21, num_gpios=16 )
@@ -219,6 +223,8 @@ class relaySwitch:
 
 	def switch( self, id ):
 
+		controller = None
+
 		# Get the first relay controller
 		if id <= 15 :
 			controller = self.mcp1
@@ -235,7 +241,7 @@ class relaySwitch:
 			pin = id - 30
 
 		# If there is no controller then return
-		if !controller : return
+		if controller == None : return
 
 		# TURN ON THE PIN
 		controller.output( pin, 1 )
@@ -258,7 +264,7 @@ class relaySwitch:
 
 	def setupController( self, controller ):
 		# If there is no controller then return
-		if !controller : return
+		if controller == None : return
 
 		# Setup pins on the I2C Controller chip
 		for x in range( 0, 15 ):
@@ -269,8 +275,8 @@ class relaySwitch:
 
 	def cleanController( self, controller ):
 		# If there is no controller then return
-		if !controller : return
-		
+		if controller == None : return
+
 		# Turn off the output pins
 		for x in range( 0, 15 ):
 			controller.output( x, 0 )
