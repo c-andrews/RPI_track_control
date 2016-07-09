@@ -256,9 +256,8 @@ class relaySwitch:
 	def setupController( self, controller ):
 		# Setup pins on the I2C Controller chip
 		for x in range( 0, 15 ):
-			# controller.config( x, OUTPUT )
 			controller.config( x, GPIO.OUT )
-            controller.output( x, 1 )
+			controller.output( x, 1 )
 		
 
 
