@@ -170,8 +170,8 @@ class relaySwitch:
 
 		# Setup the three MCP23017 chips
 		self.mcp1 = Adafruit_MCP230XX( address=0x20, num_gpios=16 )
-		self.mcp2 = Adafruit_MCP230XX( busnum=1, address=0x21, num_gpios=16 )
-		self.mcp3 = Adafruit_MCP230XX( busnum=1, address=0x22, num_gpios=16 )
+		self.mcp2 = Adafruit_MCP230XX( address=0x21, num_gpios=16 )
+		self.mcp3 = Adafruit_MCP230XX( address=0x22, num_gpios=16 )
 		
 		# Set the pins to be outputs
 		self.setupController( self.mcp1 )
