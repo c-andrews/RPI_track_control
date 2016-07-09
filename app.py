@@ -267,7 +267,7 @@ class relaySwitch:
 		if controller == None : return
 
 		# Setup pins on the I2C Controller chip
-		for x in range( 0, 15 ):
+		for x in range( 0, 16 ):
 			controller.config( x, GPIO.OUT )
 			controller.output( x, 1 )
 		
@@ -278,7 +278,7 @@ class relaySwitch:
 		if controller == None : return
 
 		# Turn off the output pins
-		for x in range( 0, 15 ):
+		for x in range( 0, 16 ):
 			controller.output( x, 1 )
 		
 
