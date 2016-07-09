@@ -121,6 +121,8 @@ class stepMotor:
 		if ( os.path.isfile( 'objs.pickle' )):
 			with open('objs.pickle') as f:	
 				self.motorPosDeg = pickle.load( f )
+		else :
+			self.motorPosDeg = 0
 
 		print 'START POS: %s\n' %str( self.motorPosDeg )
 
