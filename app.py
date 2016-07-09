@@ -314,7 +314,7 @@ class WSHandler( tornado.websocket.WebSocketHandler ):
 
 		# If the first code is "switch" then we want to switch a point
 		elif ( str(data[0]) == "switch" ):
-			self.switcher.switch( int( data[1]), int( data[2]))
+			self.switcher.switch( int( data[1]))
 
 		# If the first code is "shutdown" to shutdown the Raspberry PI
 		elif ( str(data[0]) == "shutdown" ):
