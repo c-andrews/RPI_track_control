@@ -210,7 +210,7 @@ class relaySwitch:
 				self.switch( x )
 			
 				# Wait for the sleep time
-				time.sleep( self.sleepTime + 0.1 );
+				time.sleep( self.sleepTime );
 
 				# Increase I so that we miss the open relay
 				i=0
