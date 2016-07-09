@@ -124,7 +124,7 @@ class stepMotor:
 	# Go to initial position defined by optical sensor
 	def initPos( self ):
 
-		data = null
+		data = None
 
 		if ( os.path.isfile( 'objs.pickle' )):
 			with open('objs.pickle') as f:	
