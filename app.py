@@ -6,7 +6,7 @@ import tornado.httpserver
 import tornado.websocket
 import tornado.ioloop
 import tornado.web
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 import atexit
 import pickle
@@ -256,7 +256,9 @@ class relaySwitch:
 	def setupController( self, controller ):
 		# Setup pins on the I2C Controller chip
 		for x in range( 0, 15 ):
-			controller.config( x, OUTPUT )
+			# controller.config( x, OUTPUT )
+			controller.config( x, GPIO.OUT )
+            controller.output( x, 1 )
 		
 
 
