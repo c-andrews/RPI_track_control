@@ -183,8 +183,8 @@ class relaySwitch:
 
 		# Setup the three MCP23017 chips
 		self.mcp1 = Adafruit_MCP230XX( address=0x20, num_gpios=16 )
-		self.mcp2 = Adafruit_MCP230XX( address=0x21, num_gpios=16 )
-		self.mcp3 = Adafruit_MCP230XX( address=0x22, num_gpios=16 )
+		# self.mcp2 = Adafruit_MCP230XX( address=0x21, num_gpios=16 )
+		# self.mcp3 = Adafruit_MCP230XX( address=0x22, num_gpios=16 )
 		
 		# Set the pins to be outputs
 		self.setupController( self.mcp1 )
@@ -234,6 +234,9 @@ class relaySwitch:
 			controller = self.mcp3
 			pin = id - 30
 
+		# If there is no controller then return
+		if !controller : return
+
 		# TURN ON THE PIN
 		controller.output( pin, 1 )
 		
@@ -254,6 +257,9 @@ class relaySwitch:
 
 
 	def setupController( self, controller ):
+		# If there is no controller then return
+		if !controller : return
+
 		# Setup pins on the I2C Controller chip
 		for x in range( 0, 15 ):
 			controller.config( x, GPIO.OUT )
@@ -262,6 +268,9 @@ class relaySwitch:
 
 
 	def cleanController( self, controller ):
+		# If there is no controller then return
+		if !controller : return
+		
 		# Turn off the output pins
 		for x in range( 0, 15 ):
 			controller.output( x, 0 )
