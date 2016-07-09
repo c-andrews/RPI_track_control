@@ -189,7 +189,7 @@ class relaySwitch:
 		for x in range( 0, 45 ):
 			
 			# if i is 0 then trigger the switch
-			if i == 0:
+			if i == 0 :
 				self.switch( x )
 			
 				# Wait for the sleep time
@@ -199,7 +199,7 @@ class relaySwitch:
 				i+=1
 
 			# if i is not 0 then reset it to 0
-			else
+			else :
 				i=0
 
 		
