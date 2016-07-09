@@ -100,6 +100,11 @@ class stepMotor:
 
 		s = 1
 
+		print 'DESIRED ANGLE: %s\n' %str( desiredAngle )
+
+		if desiredAngle == self.motorPosDeg:
+			return
+
 		deltaAngle = abs( self.motorPosDeg - desiredAngle )
 
 		if ( desiredAngle > self.motorPosDeg ):
