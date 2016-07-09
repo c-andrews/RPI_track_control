@@ -210,7 +210,7 @@ class relaySwitch:
 				self.switch( x )
 			
 				# Wait for the sleep time
-				time.sleep( self.sleepTime );
+				time.sleep( self.sleepTime + 0.1 );
 
 				# Increase I so that we miss the open relay
 				i+=1
@@ -244,13 +244,13 @@ class relaySwitch:
 		if controller == None : return
 
 		# TURN ON THE PIN
-		controller.output( pin, 1 )
+		controller.output( pin, 0 )
 		
 		# Wait for the sleep time
 		time.sleep( self.sleepTime );
 
 		# TURN OFF THE PIN
-		controller.output( pin, 0 )
+		controller.output( pin, 1 )
 
 
 
@@ -279,7 +279,7 @@ class relaySwitch:
 
 		# Turn off the output pins
 		for x in range( 0, 15 ):
-			controller.output( x, 0 )
+			controller.output( x, 1 )
 		
 
 
