@@ -100,8 +100,8 @@ class stepMotor:
 
 		s = 1
 
-		print 'DESIRED ANGLE: %s\n' %str( desiredAngle )
-		print 'CURRENT POS: %s\n' %str( self.motorPosDeg )
+		# print 'DESIRED ANGLE: %s\n' %str( desiredAngle )
+		# print 'CURRENT POS: %s\n' %str( self.motorPosDeg )
 
 		if desiredAngle == self.motorPosDeg:
 			return
@@ -124,9 +124,14 @@ class stepMotor:
 	# Go to initial position defined by optical sensor
 	def initPos( self ):
 
+		data = null
+
 		if ( os.path.isfile( 'objs.pickle' )):
 			with open('objs.pickle') as f:	
-				self.motorPosDeg = pickle.load( f )
+				data = pickle.load( f )
+		
+		if data :
+			self.motorPosDeg = data[0]
 		else :
 			self.motorPosDeg = 0
 
