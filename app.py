@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
-from Adafruit_GPIO.MCP230xx import Adafruit_MCP230XX
+from Adafruit_GPIO import MCP230xx as Adafruit_MCP230XX
 
 import tornado.httpserver
 import tornado.ioloop
