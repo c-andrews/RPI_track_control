@@ -2,7 +2,7 @@
 #launch.sh
 
 # Start the VNC Server
-vncserver :1
+vncserver :1 -geometry 800x600 -depth 16 -pixelformat rgb565
 
 # Navigate to the root directory
 cd /
