@@ -11,7 +11,7 @@ cd /
 cd home/pi/Documents/RPI_track_control
 
 # Run the python script
-sudo python app.py
+# sudo python app.py
 
 # Navigate back to the root directory
 cd /
