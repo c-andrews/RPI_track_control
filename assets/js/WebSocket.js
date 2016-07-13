@@ -12,7 +12,7 @@ WebSocketManager.prototype = {
 	// _url: "ws://raspberrypi.local:8888/ws",
 	// _url: "ws://192.168.0.42:8888/ws",
 	// _url: "ws://localhost:8888/ws",
-	_url: "ws://localhost:8080/ws",
+	_url: "ws://trainpi:8080/ws",
 	_error: null,
 	_closed: null,
 	_connected: null,
