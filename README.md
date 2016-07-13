@@ -23,3 +23,9 @@ Python and Web Interface to model railway
 	<li>Tornado Web Server (http://lowpowerlab.com/blog/2013/01/17/raspberrypi-websockets-with-python-tornado/)</li>
 </ul>
 
+<strong>Inspiration:</strong>
+<ul>
+	<li>http://iot-projects.com/index.php?id=websocket-a-simple-example</li>
+	<li>https://www.youtube.com/watch?v=TFt480sxNWg</li>
+	<li>https://www.youtube.com/watch?v=-ATOKGPQgkk</li>
+</ul>

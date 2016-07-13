@@ -1,0 +1,47 @@
+
+# USEFULL VIDEOS: https://www.youtube.com/watch?v=PAU4Lh3nD58
+
+
+
+# Update Raspberry PI
+sudo apt-get update
+
+# Update Raspberry PI's installed packages
+sudo apt-get dist-upgrade
+
+# Run a cleanup
+sudo apt-get clean
+
+# Set up Config
+sudo raspi-config
+
+
+# Change Directory
+cd
+
+# List files within a directory
+ls
+
+
+# Edit a file
+sudo nano {filename}
+
+# Run a python file
+sudo python {filename}
+
+
+# Install MS Remote desktop
+sudo apt-get install xrdp
+
+# Install VNC server
+sudo apt-get install tightvncserver
+
+# Load up VNC
+vncserver :1
+
+# Enable file share
+sudo apt-get install netatalk
+
+
+# Reboot 
+sudo reboot
