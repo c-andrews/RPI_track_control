@@ -45,3 +45,11 @@ sudo apt-get install netatalk
 
 # Reboot 
 sudo reboot
+
+
+
+# Download Git Repo
+git clone https://github.com/c-andrews/RPI_track_control
+
+# Update Git Repo
+git pull
