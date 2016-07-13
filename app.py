@@ -301,7 +301,7 @@ class relaySwitch:
 
 
 
-class WSHandler( tornado.websocket.WebSocketHandler ):
+class WebSocketHandler( tornado.websocket.WebSocketHandler ):
 
 	def open(self):
 		print 'CONNECTED.\n'
