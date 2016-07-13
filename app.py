@@ -187,9 +187,9 @@ class relaySwitch:
 		self.mcp3 = None
 
 		# Setup the three MCP23017 chips
-		self.mcp1 = MCP23017( address=0x20 )
-		# self.mcp2 = MCP23017( address=0x21, num_gpios=16 )
-		# self.mcp3 = MCP23017( address=0x22, num_gpios=16 )
+		self.mcp1 = MCP230xx( address=0x20, num_gpios=16 )
+		# self.mcp2 = MCP230xx( address=0x21, num_gpios=16 )
+		# self.mcp3 = MCP230xx( address=0x22, num_gpios=16 )
 		
 		# Set the pins to be outputs
 		self.setupController( self.mcp1 )
