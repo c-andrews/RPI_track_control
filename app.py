@@ -366,6 +366,8 @@ if __name__ == "__main__":
 	settings = {
 		"assets_path": os.path.join(os.path.dirname(__file__), "assets" )
 	}
+
+	print "ASSET PATH:", settings['assets_path']
 	
 	app = tornado.web.Application(
 	    handlers=[
