@@ -362,12 +362,18 @@ class WebSocketHandler( tornado.websocket.WebSocketHandler ):
 if __name__ == "__main__":
 
 	tornado.options.parse_command_line()
+
+	settings = {
+		"assets_path": os.path.join(os.path.dirname(__file__), "assets" )
+	}
 	
 	app = tornado.web.Application(
 	    handlers=[
 	        (r"/", IndexHandler),
-	        (r"/ws", WebSocketHandler)
-	    ]
+	        (r"/ws", WebSocketHandler),
+	        (r"/(apple-touch-icon\.png)", tornado.web.StaticFileHandler, dict( path=settings['assets_path'])),
+	    ],
+	    **settings
 	)
 
 	httpServer = tornado.httpserver.HTTPServer( app )
