@@ -1,17 +1,29 @@
 #!/usr/bin/python
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
-from Adafruit.MCP230xx.Adafruit_MCP230xx import Adafruit_MCP230XX
+#from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+#from Adafruit.MCP230xx.Adafruit_MCP230xx import Adafruit_MCP230XX
 
 import tornado.httpserver
-import tornado.websocket
 import tornado.ioloop
+import tornado.options
 import tornado.web
+import tornado.websocket
 import RPi.GPIO as GPIO
 import time
 import atexit
 import pickle
 import os
 import git
+
+
+
+ 
+from tornado.options import define, options
+
+define("port", default=8080, help="run on the given port", type=int)
+ 
+class IndexHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('app.html')
 
 
 
@@ -295,37 +307,37 @@ class WSHandler( tornado.websocket.WebSocketHandler ):
 		print 'CONNECTED.\n'
 
 		# Create the stepper motor controller
-		self.stepper = stepMotor()
+		#self.stepper = stepMotor()
 
 		# Create the relay switch controller
-		self.switcher = relaySwitch()
+		#self.switcher = relaySwitch()
 
 
 
 	def on_message( self, message ):
-		# print 'RECIEVED MESSAGE: %s\n' %message
+		print 'RECIEVED MESSAGE: %s\n' %message
 
 		# Split the message so that we can access the data elements
-		data = message.split(";")
+		#data = message.split(";")
 
 		# If the first code is "turntable" then we want to control the turntable stepper motor
-		if ( str(data[0]) == "turntable" ):
-			self.stepper.rotateToAngle( float( data[1]), float( data[2]))
+		#if ( str(data[0]) == "turntable" ):
+		#	self.stepper.rotateToAngle( float( data[1]), float( data[2]))
 
 		# If the first code is "switch" then we want to switch a point
-		elif ( str(data[0]) == "switch" ):
-			self.switcher.switch( int( data[1]))
+		#elif ( str(data[0]) == "switch" ):
+		#	self.switcher.switch( int( data[1]))
 
 		# If the first code is "shutdown" to shutdown the Raspberry PI
-		elif ( str(data[0]) == "shutdown" ):
-			self.switcher.cleanup();
-			self.stepper.cleanup();
-			os.system('shutdown -h now')
+		#elif ( str(data[0]) == "shutdown" ):
+		#	self.switcher.cleanup();
+		#	self.stepper.cleanup();
+		#	os.system('shutdown -h now')
 
 		# If the first code is "update" then update the code from git
-		elif ( str(data[0]) == "update" ):
-			g = git.cmd.Git("https://github.com/c-andrews/RPI_track_control.git")
-			g.pull()
+		#elif ( str(data[0]) == "update" ):
+		#	g = git.cmd.Git("https://github.com/c-andrews/RPI_track_control.git")
+		#	g.pull()
 
 
 
@@ -347,10 +359,29 @@ class WSHandler( tornado.websocket.WebSocketHandler ):
 
 
 
-application = tornado.web.Application([( r'/ws', WSHandler ),])
-
 if __name__ == "__main__":
-	http_server = tornado.httpserver.HTTPServer(application)
-	http_server.listen(8888)
-	main_loop = tornado.ioloop.IOLoop.instance()
-	main_loop.start()
+
+	tornado.options.parse_command_line()
+	
+	app = tornado.web.Application(
+	    handlers=[
+	        (r"/", IndexHandler),
+	        (r"/ws", WebSocketHandler)
+	    ]
+	)
+
+	httpServer = tornado.httpserver.HTTPServer( app )
+	httpServer.listen( options.port )
+
+	print "Listening on port:", options.port
+
+	tornado.ioloop.IOLoop.instance().start()
+
+
+# application = tornado.web.Application([( r'/ws', WSHandler ),])
+
+# if __name__ == "__main__":
+# 	http_server = tornado.httpserver.HTTPServer(application)
+# 	http_server.listen(8888)
+# 	main_loop = tornado.ioloop.IOLoop.instance()
+# 	main_loop.start()
