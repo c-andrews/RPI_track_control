@@ -365,8 +365,10 @@ if __name__ == "__main__":
 
 	settings = {
 		"debug": True,
-		"static_path": os.path.join(os.path.dirname(__file__), "assets" )
+		# "static_path": os.path.join(os.path.dirname(__file__), "assets" )
 	}
+
+	static_path = os.path.join(os.path.dirname(__file__), "assets" )
 
 	print "ASSET PATH:", settings['static_path']
 	
@@ -374,7 +376,8 @@ if __name__ == "__main__":
 	    handlers=[
 	        (r"/", IndexHandler),
 	        (r"/ws", WebSocketHandler),
-	        (r"/(apple-touch-icon\.png)", tornado.web.StaticFileHandler, dict( path=settings['static_path'])),
+	        # (r"/(apple-touch-icon\.png)", tornado.web.StaticFileHandler, dict( path=settings['static_path'])),
+	        (r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": static_path})
 	    ],
 	    **settings
 	)
