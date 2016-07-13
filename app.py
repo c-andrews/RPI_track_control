@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
-from Adafruit_GPIO import MCP230xx as Adafruit_MCP230XX
+from Adafruit_GPIO import MCP230xx
 
 import tornado.httpserver
 import tornado.ioloop
@@ -187,9 +187,9 @@ class relaySwitch:
 		self.mcp3 = None
 
 		# Setup the three MCP23017 chips
-		self.mcp1 = Adafruit_MCP230XX( address=0x20, num_gpios=16 )
-		# self.mcp2 = Adafruit_MCP230XX( address=0x21, num_gpios=16 )
-		# self.mcp3 = Adafruit_MCP230XX( address=0x22, num_gpios=16 )
+		self.mcp1 = MCP23017( address=0x20 )
+		# self.mcp2 = MCP23017( address=0x21, num_gpios=16 )
+		# self.mcp3 = MCP23017( address=0x22, num_gpios=16 )
 		
 		# Set the pins to be outputs
 		self.setupController( self.mcp1 )
