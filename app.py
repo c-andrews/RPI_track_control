@@ -17,17 +17,6 @@ import git
 
 
  
-from tornado.options import define, options
-
-define("port", default=8080, help="run on the given port", type=int)
- 
-class IndexHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render('app.html')
-
-
-
-
 
 # STEP MOTOR
 class stepMotor:
@@ -296,7 +285,19 @@ class relaySwitch:
 
 
 
+#------------------------------------------------------------------------------------
 
+
+
+
+
+from tornado.options import define, options
+
+define("port", default=8080, help="run on the given port", type=int)
+ 
+class IndexHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('app.html')
 
 
 
@@ -307,10 +308,10 @@ class WebSocketHandler( tornado.websocket.WebSocketHandler ):
 		print 'CONNECTED.\n'
 
 		# Create the stepper motor controller
-		#self.stepper = stepMotor()
+		self.stepper = stepMotor()
 
 		# Create the relay switch controller
-		#self.switcher = relaySwitch()
+		self.switcher = relaySwitch()
 
 
 
@@ -318,26 +319,26 @@ class WebSocketHandler( tornado.websocket.WebSocketHandler ):
 		print 'RECIEVED MESSAGE: %s\n' %message
 
 		# Split the message so that we can access the data elements
-		#data = message.split(";")
+		data = message.split(";")
 
 		# If the first code is "turntable" then we want to control the turntable stepper motor
-		#if ( str(data[0]) == "turntable" ):
-		#	self.stepper.rotateToAngle( float( data[1]), float( data[2]))
+		if ( str(data[0]) == "turntable" ):
+			self.stepper.rotateToAngle( float( data[1]), float( data[2]))
 
 		# If the first code is "switch" then we want to switch a point
-		#elif ( str(data[0]) == "switch" ):
-		#	self.switcher.switch( int( data[1]))
+		elif ( str(data[0]) == "switch" ):
+			self.switcher.switch( int( data[1]))
 
 		# If the first code is "shutdown" to shutdown the Raspberry PI
-		#elif ( str(data[0]) == "shutdown" ):
-		#	self.switcher.cleanup();
-		#	self.stepper.cleanup();
-		#	os.system('shutdown -h now')
+		elif ( str(data[0]) == "shutdown" ):
+			self.switcher.cleanup();
+			self.stepper.cleanup();
+			os.system('shutdown -h now')
 
 		# If the first code is "update" then update the code from git
-		#elif ( str(data[0]) == "update" ):
-		#	g = git.cmd.Git("https://github.com/c-andrews/RPI_track_control.git")
-		#	g.pull()
+		elif ( str(data[0]) == "update" ):
+			g = git.cmd.Git("https://github.com/c-andrews/RPI_track_control")
+			g.pull()
 
 
 
@@ -365,18 +366,14 @@ if __name__ == "__main__":
 
 	settings = {
 		"debug": True,
-		# "static_path": os.path.join(os.path.dirname(__file__), "assets" )
 	}
 
 	static_path = os.path.join(os.path.dirname(__file__), "assets" )
 
-	# print "ASSET PATH:", settings['static_path']
-	
 	app = tornado.web.Application(
 	    handlers=[
 	        (r"/", IndexHandler),
 	        (r"/ws", WebSocketHandler),
-	        # (r"/(apple-touch-icon\.png)", tornado.web.StaticFileHandler, dict( path=settings['static_path'])),
 	        (r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": static_path})
 	    ],
 	    **settings
@@ -390,10 +387,3 @@ if __name__ == "__main__":
 	tornado.ioloop.IOLoop.instance().start()
 
 
-# application = tornado.web.Application([( r'/ws', WSHandler ),])
-
-# if __name__ == "__main__":
-# 	http_server = tornado.httpserver.HTTPServer(application)
-# 	http_server.listen(8888)
-# 	main_loop = tornado.ioloop.IOLoop.instance()
-# 	main_loop.start()
