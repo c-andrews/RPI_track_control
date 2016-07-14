@@ -220,20 +220,20 @@ class RelaySwitch:
 		pin = id + 65
 
 		# TURN ON THE PIN
-		wiringpi.digitalWrite( pin, 1 )
+		wiringpi.digitalWrite( pin, 0 )
 		
 		# Wait for the sleep time
 		time.sleep( self.sleepTime );
 
 		# TURN OFF THE PIN
-		wiringpi.digitalWrite( pin, 0 )
+		wiringpi.digitalWrite( pin, 1 )
 
 
 
 	def cleanup( self ):
 		# Turn off the output pins
 		for x in range( 65, 114 ):
-			wiringpi.digitalWrite( x, 0 ) # Set pin to off
+			wiringpi.digitalWrite( x, 1 ) # Set pin to off
 		
 
 
@@ -251,7 +251,7 @@ class RelaySwitch:
 		# Setup pins on the I2C Controller chip
 		for x in range( 65, 114 ):
 			wiringpi.pinMode( x, 1 ) # Set pin to output
-			wiringpi.digitalWrite( x, 0 ) # Set pin to off
+			wiringpi.digitalWrite( x, 1 ) # Set pin to off
 		
 		
 
