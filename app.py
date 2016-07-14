@@ -1,13 +1,14 @@
 #!/usr/bin/python
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
-from Adafruit_GPIO import MCP230xx
-
+# from Adafruit_GPIO import MCP230xx
+import wiringpi2 as wiringpi
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
 import tornado.websocket
 import RPi.GPIO as GPIO
+import smbus
 import time
 import atexit
 import pickle
@@ -16,10 +17,11 @@ import git
 
 
 
+#------------------------------------------------------------------------------------
  
 
 # STEP MOTOR
-class stepMotor:
+class StepMotor:
 	
 	#init gpio and rotate motor to initial position (0 degrees)
 	def __init__( self ):
@@ -170,32 +172,22 @@ class stepMotor:
 
 
 
-
+#------------------------------------------------------------------------------------
 
 
 
 # STEP MOTOR
-class relaySwitch:
+class RelaySwitch:
 
 	def __init__( self ):
 
 		# Set the sleep time
 		self.sleepTime = 0.1
 
-		self.mcp1 = None
-		self.mcp2 = None
-		self.mcp3 = None
-
-		# Setup the three MCP23017 chips
-		self.mcp1 = MCP230xx( address=0x20, num_gpios=16 )
-		# self.mcp2 = MCP230xx( address=0x21, num_gpios=16 )
-		# self.mcp3 = MCP230xx( address=0x22, num_gpios=16 )
-		
 		# Set the pins to be outputs
-		self.setupController( self.mcp1 )
-		self.setupController( self.mcp2 )
-		self.setupController( self.mcp3 )
-
+		self.create()
+		
+		# INitalise the switches
 		self.initSwitches()
 
 
@@ -224,65 +216,47 @@ class relaySwitch:
 
 	def switch( self, id ):
 
-		controller = None
-
-		# Get the first relay controller
-		if id <= 15 :
-			controller = self.mcp1
-			pin = id
-
-		# Get the second relay controller
-		elif id <= 30 :
-			controller = self.mcp2
-			pin = id - 15
-
-		# Get the thrid relay controller
-		elif id < 45 :
-			controller = self.mcp3
-			pin = id - 30
-
-		# If there is no controller then return
-		if controller == None : return
+		# Get the pin number
+		pin = id + 65
 
 		# TURN ON THE PIN
-		controller.output( pin, 0 )
+		wiringpi.digitalWrite( pin, 1 )
 		
 		# Wait for the sleep time
 		time.sleep( self.sleepTime );
 
 		# TURN OFF THE PIN
-		controller.output( pin, 1 )
+		wiringpi.digitalWrite( pin, 0 )
 
 
 
 	def cleanup( self ):
-		# Turn off all of the switches
-		self.cleanController( self.mcp1 )
-		self.cleanController( self.mcp2 )
-		self.cleanController( self.mcp3 )
+		# Turn off the output pins
+		for x in range( 65, 114 ):
+			wiringpi.digitalWrite( x, 0 ) # Set pin to off
+		
 
 
 
-	def setupController( self, controller ):
+	def create( self ):
+		# Addresses: 0x20, 0x21, 0x22
+		# Setup WIRING PI in Pin Mode
+		wiringpi.wiringPiSetup()
+
+		# Setup the chips
+		wiringpi.mcp23017Setup( 65, 0x20 )
+		wiringpi.mcp23017Setup( 81, 0x21 )
+		wiringpi.mcp23017Setup( 97, 0x22 )
+
 		# If there is no controller then return
 		if controller == None : return
 
 		# Setup pins on the I2C Controller chip
-		for x in range( 0, 16 ):
-			controller.config( x, GPIO.OUT )
-			controller.output( x, 1 )
+		for x in range( 65, 114 ):
+			wiringpi.pinMode( x, 1 ) # Set pin to output
+			wiringpi.digitalWrite( x, 0 ) # Set pin to off
 		
-
-
-	def cleanController( self, controller ):
-		# If there is no controller then return
-		if controller == None : return
-
-		# Turn off the output pins
-		for x in range( 0, 16 ):
-			controller.output( x, 1 )
 		
-
 
 
 #------------------------------------------------------------------------------------
@@ -301,6 +275,9 @@ class IndexHandler(tornado.web.RequestHandler):
 
 
 
+#------------------------------------------------------------------------------------
+
+
 
 class WebSocketHandler( tornado.websocket.WebSocketHandler ):
 
@@ -308,10 +285,10 @@ class WebSocketHandler( tornado.websocket.WebSocketHandler ):
 		print 'CONNECTED.\n'
 
 		# Create the stepper motor controller
-		self.stepper = stepMotor()
+		self.stepper = StepMotor()
 
 		# Create the relay switch controller
-		self.switcher = relaySwitch()
+		self.switcher = RelaySwitch()
 
 
 
@@ -357,6 +334,8 @@ class WebSocketHandler( tornado.websocket.WebSocketHandler ):
 		self.write_message( message )
 
 
+
+#------------------------------------------------------------------------------------
 
 
 
