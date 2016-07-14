@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
 # from Adafruit_GPIO import MCP230xx
-import wiringpi2 as wiringpi
+import wiringpi
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
@@ -247,9 +247,6 @@ class RelaySwitch:
 		wiringpi.mcp23017Setup( 65, 0x20 )
 		wiringpi.mcp23017Setup( 81, 0x21 )
 		wiringpi.mcp23017Setup( 97, 0x22 )
-
-		# If there is no controller then return
-		if controller == None : return
 
 		# Setup pins on the I2C Controller chip
 		for x in range( 65, 114 ):
