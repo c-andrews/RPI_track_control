@@ -309,11 +309,6 @@ class WebSocketHandler( tornado.websocket.WebSocketHandler ):
 			self.stepper.cleanup();
 			os.system('shutdown -h now')
 
-		# If the first code is "update" then update the code from git
-		elif ( str(data[0]) == "update" ):
-			g = git.cmd.Git("https://github.com/c-andrews/RPI_track_control")
-			g.pull()
-
 
 
 	def on_close( self ):

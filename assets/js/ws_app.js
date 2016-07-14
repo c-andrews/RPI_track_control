@@ -38,10 +38,6 @@ $(document).ready( function () {
 		ws.send( "shutdown;0" );
 	})
 
-	$( "#update_btn" ).on( "click", function(){
-		ws.send( "update;0" );
-	})
-
 
 	// PREVENT PAGE SCROLL
 	if (window.addEventListener) // older FF
