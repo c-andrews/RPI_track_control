@@ -281,11 +281,14 @@ class WebSocketHandler( tornado.websocket.WebSocketHandler ):
 	def open(self):
 		print 'CONNECTED.\n'
 
-		# Create the stepper motor controller
-		self.stepper = StepMotor()
+		if ( self.stepper !== None and self.switcher !== None ) :
+			print "Stepper and Switcher Already Created"
+		else :
+			# Create the stepper motor controller
+			self.stepper = StepMotor()
 
-		# Create the relay switch controller
-		self.switcher = RelaySwitch()
+			# Create the relay switch controller
+			self.switcher = RelaySwitch()
 
 
 
