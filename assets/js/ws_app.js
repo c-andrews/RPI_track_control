@@ -49,3 +49,8 @@ $(document).ready( function () {
 	document.onkeydown  = preventDefaultForScrollKeys;
 
 });
+
+
+$(function() {
+    FastClick.attach(document.body);
+});
